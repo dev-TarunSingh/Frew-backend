@@ -9,6 +9,8 @@ const app = express();
 
 app.use(express.json());
 
+app.use(cors());
+
 mongoose
   .connect(process.env.URL)
   .then(() => {
@@ -27,7 +29,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.URL }),
-    cookie: { secure: false }, // Set to true if using HTTPS
+    cookie: { secure: false }, 
   })
 );
 
