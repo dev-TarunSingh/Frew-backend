@@ -4,8 +4,10 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const PORT =  process.env.PORT;
+const PORT = process.env.PORT;
 const app = express();
+const userController = require("./Controllers/UserController");
+const apiController = require("./Controllers/apiController");
 
 app.use(express.json());
 
@@ -29,12 +31,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.URL }),
-    cookie: { secure: false }, 
+    cookie: { secure: false },
   })
 );
-
-const userController = require("./Controllers/UserController");
+app.use("/api", apiController);
 app.use("/api/users", userController);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
